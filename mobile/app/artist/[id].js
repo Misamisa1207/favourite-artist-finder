@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import {View, Text, FlatList, ActiveIndicator, Pressable, TouchableOpacity, Image, StyleSheet, ScrollView} from "react-native";
 import {useLocalSearchParams, router} from "expo-router";
+import ArtistCard from "../../components/Card";
 
 const ArtistDetailScreen = () => {
   const { id } = useLocalSearchParams();
@@ -57,16 +58,15 @@ const ArtistDetailScreen = () => {
         data={relatedArtists}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({item}) => (
-          <Pressable
-            style={styles.card}
-            onPress={() =>
+          <ArtistCard 
+            artist={item}
+            onPress={() => 
               router.push({
-                pathname: `/artist/${item.id}`,
+                pathname: "/artist/[id]",
+                params: {id: item.id},
               })
             }
-            >
-              <Text>{item.name}</Text>
-            </Pressable>
+          />
         )}
       />
 

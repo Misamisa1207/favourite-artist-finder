@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import {View, Text, FlatList, Pressable, TouchableOpacity, Image, StyleSheet, ScrollView} from "react-native";
 import {useLocalSearchParams, router} from "expo-router";
 
+import ArtistCard from "../components/Card.js";
+
 const ResultsScreen = () => {
   const { artistName } = useLocalSearchParams();
 
@@ -39,18 +41,10 @@ const ResultsScreen = () => {
         data={artists}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({item}) => (
-          <Pressable style={styles.card} onPress={() => goToDetail(item.id)}>
-            <View>
-              <Text style={styles.artistName}>{item.name}</Text>
-              <Text style={styles.fans}>{item.nb_fan}</Text>
-            </View>
-
-            {item.picture_medium && (
-              <Image
-                source={{uri: item.picture_medium}}
-              />
-            )}
-          </Pressable>
+          <ArtistCard
+            artist={item}
+            onPress={() => goToDetail(item.id)}
+          />
         )}
         ListEmptyComponent={
           <Text style={styles.emptyText}>No artist found</Text>
