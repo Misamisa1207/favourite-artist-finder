@@ -8,6 +8,7 @@ const ArtistDetailScreen = () => {
 
   const [artist, setArtist] = useState(null);
   const [relatedArtists, setRelatedArtists] = useState([]);
+  const [loading, setLoading] = useState(true);
   
   useEffect(() => {
     fetchArtist();
@@ -30,6 +31,8 @@ const ArtistDetailScreen = () => {
       setRelatedArtists(relatedData.data || []); // this is for FlatList
     }catch(error){
       console.log(error);
+    }finally{
+      setLoading(false);
     }
   };
 
@@ -41,6 +44,14 @@ const ArtistDetailScreen = () => {
   );
 }
 
+    if (loading) {
+    return (
+      <View style={styles.center}>
+        <ActivityIndicator size="large" color="#6BB9F0" />
+        <Text>Loading...</Text>
+      </View>
+    );
+    }
   return(
     <View style={styles.container}>
       <Text style={styles.name}>{artist.name}</Text>
